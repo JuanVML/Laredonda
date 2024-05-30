@@ -1,5 +1,4 @@
-
-package juevesinicio;
+package Vista;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -12,20 +11,25 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import Vista.DatabaseConnection;
+import Vista.Registro;
+import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.UIManager;
 
 public class InicioSesion extends javax.swing.JFrame {
- // Iconos para el jToggleButton2
-    private final Icon iconVisible = new ImageIcon(getClass().getResource("/imagenes/Eye_20.png"));
-    private final Icon iconOculto = new ImageIcon(getClass().getResource("/imagenes/Hide_20.png"));
+    // Iconos para el jToggleButton2
+
+    private final Icon iconVisible = new ImageIcon(getClass().getResource("/Vista/Eye_20.png"));
+    private final Icon iconOculto = new ImageIcon(getClass().getResource("/Vista/Hide_20.png"));
     // PARA MOSTRAR VISIBILIDAD:
     private boolean passwordVisible = false; // Estado inicial del campo de contraseña
-    
+
     public InicioSesion() {
         initComponents();
-         setImageLabel(jLabel1, "src/imagenes/redes.png");
-        setImageLabel(jLabel2, "src/imagenes/a.png");
-        setImageLabel(jLabel3, "src/imagenes/250.png");
-    
+        setImageLabel(jLabel1, "src/Vista/redes.png");
+        setImageLabel(jLabel2, "src/Vista/a.png");
+        setImageLabel(jLabel3, "src/Vista/250.png");
+
         // PARA ALTERNAR BOTONES EN LA CONTRASEÑA:
         // Agregar FocusListener al jTextField2 para restablecer el texto si está vacío
         jtxtUsu.addFocusListener(new FocusListener() {
@@ -63,16 +67,16 @@ public class InicioSesion extends javax.swing.JFrame {
 
         // Establecer el icono inicial del jToggleButton2
         jToggleButton2.setIcon(iconOculto);
-        
-          jToggleButton2.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            togglePasswordVisibility(); // Cambiar la visibilidad de la contraseña
-            toggleButtonIcon(); // Cambiar el icono del boton
-        }
-    });
 
-              // Agregar MouseListener a JFrame para restablecer el texto si se hace clic en cualquier parte
+        jToggleButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                togglePasswordVisibility(); // Cambiar la visibilidad de la contraseña
+                toggleButtonIcon(); // Cambiar el icono del boton
+            }
+        });
+
+        // Agregar MouseListener a JFrame para restablecer el texto si se hace clic en cualquier parte
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -86,18 +90,19 @@ public class InicioSesion extends javax.swing.JFrame {
         });
     }
 
- // Para la Imagen:
+    // Para la Imagen:
     private void setImageLabel(JLabel labelName, String root) {
         ImageIcon image = new ImageIcon(root);
-        Icon icon = new ImageIcon(image.getImage().getScaledInstance(labelName.getWidth(), 
+        Icon icon = new ImageIcon(image.getImage().getScaledInstance(labelName.getWidth(),
                 labelName.getHeight(), Image.SCALE_SMOOTH));
         labelName.setIcon(icon);
         this.repaint();
     }
-  // Método para alternar la visibilidad de la contraseña en toglle
+    // Método para alternar la visibilidad de la contraseña en toglle
+
     private void togglePasswordVisibility() {
         passwordVisible = !passwordVisible; // Invertir el estado actual
-        
+
         // Actualizar el contenido del campo de contraseña
         if (passwordVisible) {
             jpsContra.setEchoChar((char) 0); // Mostrar texto claro
@@ -107,9 +112,9 @@ public class InicioSesion extends javax.swing.JFrame {
             jToggleButton2.setIcon(iconOculto);
         }
     }
-    
+
     //Para mostrar los iconos:
- private void toggleButtonIcon() {
+    private void toggleButtonIcon() {
         // Alternar entre los iconos
         if (jToggleButton2.getIcon() == iconVisible) {
             jToggleButton2.setIcon(iconOculto);
@@ -117,7 +122,7 @@ public class InicioSesion extends javax.swing.JFrame {
             jToggleButton2.setIcon(iconVisible);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -202,6 +207,7 @@ public class InicioSesion extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
@@ -209,26 +215,27 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-      Registro  p1 = new Registro();
-      p1.setVisible(true);
+        Registro p1 = new Registro();
+        p1.setVisible(true);
         dispose();
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-     String username = jtxtUsu.getText();
-    String password = new String(jpsContra.getPassword());
+        String username = jtxtUsu.getText();
+        String password = new String(jpsContra.getPassword());
 
-    if (DatabaseConnection.validateLogin(username, password)) {
-        JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-        new campos().setVisible(true); // Aquí abre la siguiente ventana
-        dispose(); // Cierra la ventana de inicio de sesión actual
-    } else {
-        JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-    }
+        if (DatabaseConnection.validateLogin(username, password)) {
+            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+            frmSistema sistema = new frmSistema();
+            sistema.setVisible(true);
+            dispose(); // Cierra la ventana de inicio de sesión actual
+        } else {
+            JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     public static void main(String args[]) {
-      
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -245,7 +252,9 @@ public class InicioSesion extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+        FlatLightLaf.setup();
+        UIManager.put("Button.arc", 50);
+        UIManager.put("TextComponent.arc", 50);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new InicioSesion().setVisible(true);

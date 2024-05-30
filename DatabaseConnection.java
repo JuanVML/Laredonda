@@ -1,4 +1,4 @@
-package juevesinicio;
+package Vista;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

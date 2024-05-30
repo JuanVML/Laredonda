@@ -1,5 +1,5 @@
 
-package juevesinicio;
+package Vista;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
